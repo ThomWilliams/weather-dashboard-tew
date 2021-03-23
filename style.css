@@ -2,4 +2,16 @@
     list-style: none;
 }
 
+.card-group {
+    background-color: rgb(230, 230, 236);
+    margin: auto;
+    padding: 10px;
+}
+
+.weather-day {
+    margin: 5px;
+    padding: 5px;
+    background-color: cornflowerblue;
+}
+
 /* see cards - https://getbootstrap.com/docs/5.0/components/card/ */

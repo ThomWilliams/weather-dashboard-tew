@@ -14,8 +14,8 @@
 
 <body>
 
-    <header class="container-fluid bg-dark text-light mb-5 p-3">
-        <div class="d-flex align-items-center">
+    <header class="container-fluid bg-dark text-light mb-5 p-3 d-flex justify-content-center">
+        <div>
           <h1>Weather Dashboard</h1>
         </div>
     </header>
@@ -26,106 +26,124 @@
 
             <!-- sidebar -->
             <aside class="col-12 col-md-4 col-xl-3">
-                <h3>Sidebar Content</h3>
+                <h4>Search for a City:</h4>
                 <!-- Search bar -->
                 
                 <div class="input-group">
                     <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
                       aria-describedby="search-addon" />
                     <button type="button" class="btn btn-outline-primary">search</button>
-                  </div>
+                </div>
 
-                  <div class="card">
+                <div class="card">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item">An item</li>
-                      <li class="list-group-item">A second item</li>
-                      <li class="list-group-item">A third item</li>
+                        <li class="list-group-item">City Name</li>
+                        <li class="list-group-item">City Name</li>
+                        <li class="list-group-item">City Name</li>
                     </ul>
-                  </div>
+                </div>
     
             </aside>
 
             <!-- main -->
             <main class="col-12 col-md-8 col-xl-9">
-                <div class ="container">
-                    <div class="column"> 
-                        <!-- lead window -->
-                        <div class="col-12 mb-5 p-1">
-                            <h3>Weather / City Today</h3>
-                        </div>
-                        
-                   
+                <div class ="container-fluid">
 
-                            <!-- Five Day Forecast -->
-                            <div class="card-group row row-cols-1 row-cols-md-3 g-4" id="five-day-forecast">
-                                   
-                                <!-- Day 1 -->
-                            <div class="col">
-                                <div class="card h-100">
-                                    <h5 class="card-title" id="day-1">Day 1: Date</h5>
-                                    <img src="..." class="card-img-top" id="weather-icon" alt="...">
-                                    <ul class="card-body">
-                                        <li class="card-text" id="date"></li>
-                                        <li class="card-text" id="temp"></li>
-                                        <li class="card-text" id="humidity"></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                                <!-- Day 2 -->
-                                <div class="col">
-                                    <div class="card h-100">
-                                        <h5 class="card-title" id="day-2">Day 2: Date</h5>
-                                        <img src="..." class="card-img-top" id="weather-icon" alt="...">
-                                        <ul class="card-body">
-                                            <li class="card-text" id="date"></li>
-                                            <li class="card-text" id="temp"></li>
-                                            <li class="card-text" id="humidity"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <!-- Day 3 -->
-                                <div class="col">
-                                    <div class="card h-100">
-                                        <h5 class="card-title" id="day-3">Day 3: Date</h5>
-                                        <img src="..." class="card-img-top" id="weather-icon" alt="...">
-                                        <ul class="card-body">
-                                            <li class="card-text" id="date"></li>
-                                            <li class="card-text" id="temp"></li>
-                                            <li class="card-text" id="humidity"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                 <!-- Day 4 -->
-                                <div class="col">
-                                    <div class="card h-100">
-                                        <h5 class="card-title" id="day-4">Day 4: Date</h5>
-                                        <img src="..." class="card-img-top" id="weather-icon" alt="...">
-                                        <ul class="card-body">
-                                            <li class="card-text" id="date"></li>
-                                            <li class="card-text" id="temp"></li>
-                                            <li class="card-text" id="humidity"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                 <!-- Day 5 -->
-                                <div class="col">
-                                    <div class="card h-100">
-                                        <h5 class="card-title" id="day-5">Day 5: Date</h5>
-                                        <img src="..." class="card-img-top" id="weather-icon" alt="...">
-                                        <ul class="card-body">
-                                            <li class="card-text" id="date"></li>
-                                            <li class="card-text" id="temp"></li>
-                                            <li class="card-text" id="humidity"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
+                    <div class="row">
+                        <h2>Weather / City</h2>
                     </div>
+
+                    <div class="row">
+                        <div class="card mb-3">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title" id="city-name">City Name</h5>
+                                <h5 class="card-title" id="date-today">Today's Date</h5>
+                                <li class="card-text" id="temp">temp</li>
+                                <li class="card-text" id="humidity">humidity</li>
+                                <li class="card-text" id="windspeed">windspeed</li>
+                                <li class="card-text" id="uv-index">uv-index</li>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Five Day Forecast -->
+                
+                    <div class="row">
+                        <h3>Five Day Forecast:</h3>
+                    </div>
+                    
+                    <div class="card-group row row-cols-1 row-cols-md-3 g-4" id="five-day-forecast">
+                            
+                        <!-- Day 1 -->
+                        <div class="col-12 col-md-4 col-xl-2">
+                            <div class="weather-day card h-100">
+                                <h5 class="card-title" id="day-1">Day 1: Date</h5>
+                                <img src="..." class="card-img-top" id="weather-icon" alt="...">
+                                <ul class="card-body">
+                                    <li class="card-text" id="date">date</li>
+                                    <li class="card-text" id="temp">temp</li>
+                                    <li class="card-text" id="humidity">humidity</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Day 2 -->
+                        <div class="col-12 col-md-4 col-xl-2 flex-fill">
+                            <div class="weather-day card h-100">
+                                <h5 class="card-title" id="day-2">Day 2: Date</h5>
+                                <img src="..." class="card-img-top" id="weather-icon" alt="...">
+                                <ul class="card-body">
+                                    <li class="card-text" id="date"></li>
+                                    <li class="card-text" id="temp"></li>
+                                    <li class="card-text" id="humidity"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Day 3 -->
+                        <div class="col-12 col-md-4 col-xl-2 flex-fill">
+                            <div class="weather-day card h-100">
+                                <h5 class="card-title" id="day-3">Day 3: Date</h5>
+                                <img src="..." class="card-img-top" id="weather-icon" alt="...">
+                                <ul class="card-body">
+                                    <li class="card-text" id="date"></li>
+                                    <li class="card-text" id="temp"></li>
+                                    <li class="card-text" id="humidity"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Day 4 -->
+                        <div class="col-12 col-md-4 col-xl-2 flex-fill">
+                            <div class="weather-day card h-100">
+                                <h5 class="card-title" id="day-4">Day 4: Date</h5>
+                                <img src="..." class="card-img-top" id="weather-icon" alt="...">
+                                <ul class="card-body">
+                                    <li class="card-text" id="date"></li>
+                                    <li class="card-text" id="temp"></li>
+                                    <li class="card-text" id="humidity"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Day 5 -->
+                        <div class="col-12 col-md-4 col-xl-2 flex-fill">
+                            <div class="weather-day card h-100">
+                                <h5 class="card-title" id="day-5">Day 5: Date</h5>
+                                <img src="..." class="card-img-top" id="weather-icon" alt="...">
+                                <ul class="card-body">
+                                    <li class="card-text" id="date"></li>
+                                    <li class="card-text" id="temp"></li>
+                                    <li class="card-text" id="humidity"></li>
+                                </ul>
+                            </div>
+                        </div>
+                  
+        
+                  </div>
                 </div>
+
             </main>
            
         </div>
