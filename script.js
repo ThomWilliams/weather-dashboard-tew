@@ -1,4 +1,4 @@
-var searchInput = document.getElementById("search-input");
+
 var searchHistory = document.getElementById("search-history")
 var cityName = document.getElementById("city")
 var temp = document.getElementById("temp")
@@ -21,30 +21,33 @@ var weatherIcon = document.getElementById("weather-icon")
 // CURRENT WEATHER WINDOW FUNCTION
 function currentWeather () { 
     // API Call from Current Weather
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={bcee456dac0d31a5715512feac159444}'
+   
+    var searchInput = document.getElementById("search-input").value
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=bcee456dac0d31a5715512feac159444`
+
 
     fetch(requestUrl)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-        console.log(data);
+    console.log(data);
 
-        for (var i = 0; i < data.length; i++) {
             
-            //Setting the text HTML elements from Weather Data
-            cityName.textContent = data[i].cityname;
-            temp.textContent = data[i].temperature;
-            humidity.textContent = data[i].humidity;
-            windspeed.textContent = data[i].windspeed;
-            uvIndex.textContent = data[i].uv-index;
-    
-            //Append text content
+    //Setting the text HTML elements from Weather Data
+    cityName.textContent = data.name + new Date().toLocaleDateString();
+    temp.textContent = data.main.temperature;
+    humidity.textContent = data.main.humidity;
+    windspeed.textContent = data.wind.speed;
+
+    var latitude = data.coord.lon;
+    var longitude = data.coord.lat;
+        
    
-        }
+    }
 
 
-    })
+)
 }
 
 
@@ -56,8 +59,7 @@ function fiveDayWeather () {
 
 
 
-
-document.getElementById("search-btn").addEventListener("click", currentWeather, fiveDayWeather);
+document.getElementById("search-btn").addEventListener("click", currentWeather);
 
 
 /* PSEUDO CODE
