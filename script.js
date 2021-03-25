@@ -46,10 +46,6 @@ function currentWeather () {
     // iconEl.setAttribute("src", iconURL);
 
 
-
-
-  
-
     // UV INDEX API
     // Defines Lat and Lon for API
     var lat = data.coord.lat;
@@ -64,14 +60,20 @@ function currentWeather () {
     .then(function (data) {
     console.log(data);
 
-    uvIndex.textContent = "UV Index: " + data.value;
+    // UV Index - color coded: red = severe, moderate = yellow, favorable = green
+    uvIndexdata = data.value; 
+    if (uvIndexdata > 8) {
+        uvIndex.style.backgroundColor = "red";
+    } if (uvIndexdata < 2) {
+        uvIndex.style.backgroundColor = "green";
+    } if ((uvIndexdata >= 3) && (uvIndexdata < 7)) {
+        uvIndex.style.backgroundColor = "yellow";}
 
- 
+    uvIndex.textContent = "UV Index: " + uvIndexdata;
+
     })
    
     
-    // Create an if statement if it is over a certian amount
-
 
     // RUNS FIVE DAY WEATHER SIMULTAENOUSLY
   
