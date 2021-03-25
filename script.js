@@ -7,6 +7,7 @@ var windspeed = document.getElementById("windspeed")
 var uvIndex = document.getElementById("uv-index")
 var date = document.getElementById("date")
 var weatherIcon = document.getElementById("weather-icon")
+var APIKey = ("bcee456dac0d31a5715512feac159444");
 
 // My API key is bcee456dac0d31a5715512feac159444
 
@@ -20,7 +21,7 @@ function currentWeather () {
     // API Call from Current Weather - https://openweathermap.org/current
    
     var searchInput = document.getElementById("search-input").value
-    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=bcee456dac0d31a5715512feac159444`
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=${APIKey}`
 
 
     fetch(requestUrl)
@@ -28,9 +29,8 @@ function currentWeather () {
       return response.json();
     })
     .then(function (data) {
-    console.log(data);
+    // console.log(data);
 
-            
     //Setting the text HTML elements from Weather Data
     cityName.textContent = data.name;
     date.textContent = new Date().toLocaleDateString();
@@ -38,14 +38,45 @@ function currentWeather () {
     humidity.textContent = "Humidity: " + data.main.humidity;
     windspeed.textContent = "Windspeed: " + data.wind.speed + "kmph";
     uvIndex.textContent = data.uvi;
-    weatherIcon.textContent = data.weather[0].icon;
-    // weatherIcon.setAttribute('src', 'http://openweathermap.org/img/w/${data.daily[i].weather.icon}.png') = data.weather[0].icon;
-   
-    // RUNS FIVE DAY WEATHER SIMULTAENOUSLy
-    var latitude = data.coord.lon;
-    var longitude = data.coord.lat;
+    // weatherIcon = data.weather[0].icon;
+    var weatherIcondata = data.weather[0].icon;
+    //console.log(weatherIcondata);
+    var iconURL="http://openweathermap.org/img/w/"+weatherIcondata+".png";
+    weatherIcon.setAttribute("src", iconURL)
+    // iconEl.setAttribute("src", iconURL);
 
-    fiveDayWeather(latitude, longitude, searchInput) 
+
+
+
+  
+
+    // UV INDEX API
+    // Defines Lat and Lon for API
+    var lat = data.coord.lat;
+    var lon = data.coord.lon;
+
+    // Call UV Index API
+    var getUVindexAPI = `http://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${APIKey}`
+    fetch(getUVindexAPI)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+    console.log(data);
+
+    uvIndex.textContent = "UV Index: " + data.value;
+
+ 
+    })
+   
+    
+    // Create an if statement if it is over a certian amount
+
+
+    // RUNS FIVE DAY WEATHER SIMULTAENOUSLY
+  
+
+    fiveDayWeather(searchInput) 
         
     }
 )
@@ -53,6 +84,30 @@ function currentWeather () {
 
 
 // UVI FUNCTION
+
+// function uviData () {
+
+//     latitude = data.coord.lat;
+//     longitude = data.coord.lon;
+//     // call a different API which has UVI in object
+//     // Create an if statement if it is over a certian amount
+
+//     var getOneCallAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&appid=bcee456dac0d31a5715512feac159444`
+
+//     fetch(getOneCallAPI)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//     console.log(data);
+
+//     uvIndex.textContent = data.current.uvi;
+//     })
+
+
+// }
+
+
 
 // FIVE DAY WEATHER FUNCTION
 
@@ -65,10 +120,10 @@ fetch(getAPI)
       return response.json();
     })
     .then(function (data) {
-    // console.log(data);
-        //  turn date data from API into curent date
+    //console.log(data);
+        //  Convert data from API into curent date
     var date = new Date(data.daily[0].dt * 1000);
-    console.log(date.toUTCString())
+    //console.log(date.toUTCString())
 
     // FOR LOOP TO REITERATE ACROSS 5 DAYS
 
@@ -79,6 +134,10 @@ fetch(getAPI)
 
     })
 }
+
+
+
+
 
 
 // FROM COLUM
