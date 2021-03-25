@@ -64,16 +64,15 @@ function currentWeather () {
     uvIndexdata = data.value; 
     if (uvIndexdata > 8) {
         uvIndex.style.backgroundColor = "red";
-    } if (uvIndexdata < 2) {
+    } if (uvIndexdata < 3) {
         uvIndex.style.backgroundColor = "green";
     } if ((uvIndexdata >= 3) && (uvIndexdata < 7)) {
         uvIndex.style.backgroundColor = "yellow";}
-
     uvIndex.textContent = "UV Index: " + uvIndexdata;
 
     })
    
-    
+
 
     // RUNS FIVE DAY WEATHER SIMULTAENOUSLY
   
