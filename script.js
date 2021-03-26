@@ -7,6 +7,7 @@ var windspeed = document.getElementById("windspeed")
 var uvIndex = document.getElementById("uv-index")
 var date = document.getElementById("date")
 var weatherIcon = document.getElementById("weather-icon")
+var weatherDay = document.querySelectorAll("weather-day")
 var APIKey = ("bcee456dac0d31a5715512feac159444");
 
 // My API key is bcee456dac0d31a5715512feac159444
@@ -58,7 +59,7 @@ function currentWeather () {
       return response.json();
     })
     .then(function (data) {
-    console.log(data);
+    // console.log(data);
 
     // UV Index - color coded: red = severe, moderate = yellow, favorable = green
     uvIndexdata = data.value; 
@@ -74,67 +75,64 @@ function currentWeather () {
    
 
 
+
+
+
+
     // RUNS FIVE DAY WEATHER SIMULTAENOUSLY
-  
 
-    fiveDayWeather(searchInput) 
-        
-    }
-)
-}
-
-
-// UVI FUNCTION
-
-// function uviData () {
-
-//     latitude = data.coord.lat;
-//     longitude = data.coord.lon;
-//     // call a different API which has UVI in object
-//     // Create an if statement if it is over a certian amount
-
-//     var getOneCallAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&appid=bcee456dac0d31a5715512feac159444`
-
-//     fetch(getOneCallAPI)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//     console.log(data);
-
-//     uvIndex.textContent = data.current.uvi;
-//     })
-
-
-// }
-
-
-
-// FIVE DAY WEATHER FUNCTION
-
-function fiveDayWeather (lat, lon, cityName) {
-
-var getAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=bcee456dac0d31a5715512feac159444`
+    var getFiveDayAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=${APIKey}`
     // https://openweathermap.org/forecast5
-fetch(getAPI)
+    fetch(getFiveDayAPI)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-    //console.log(data);
-        //  Convert data from API into curent date
+    console.log(data);
+    //  Convert data from API into curent date
     var date = new Date(data.daily[0].dt * 1000);
-    //console.log(date.toUTCString())
+    // console.log(date.toUTCString())
+
+    // 5 DAY VARIABLES
+    var dayDate = document.getElementById("day-date")
+    var dayTemp = document.getElementById("day-temp")
+    var dayHumidity = document.getElementById("day-humidity")
+    var dayWeathericon = document.getElementById("day-weather-icon")
+
+
+    dayDate.textContent = date;
+    dayTemp.textContent = "Temp: " + data.daily[0].temp.max;
+    dayHumidity.textContent = "Humidity: " + data.daily[0].humidity;
+    var dayweatherIcondata = data.daily[0].weather[0].icon;
+    //console.log(weatherIcondata);
+    var iconURL="http://openweathermap.org/img/w/"+dayweatherIcondata+".png";
+    dayWeathericon.setAttribute("src", iconURL);
+
 
     // FOR LOOP TO REITERATE ACROSS 5 DAYS
+    // for (var i = 0; i < weatherDay.length; i++) {
+        // Create index for data.daily = 0; and increment by ++ for each weather day
 
     // DAY 0 = Tomorrow // DAY 1 = 
 
     // NEED TO CREATE THE WINDOWS IN JS + APPEND THE DATA, RATHER THAN BE IN JS
 
 
-    })
+
+  
+   
+})
 }
+)
+}
+
+
+// FIVE DAY WEATHER FUNCTION
+
+// function fiveDayWeather (lat, lon, cityName) {
+
+
+// }
 
 
 
@@ -156,7 +154,7 @@ img.setAttribute(“src”, “http://openweathermap.org/img/w/${data.daily[i].w
 
 */
 
-document.getElementById("search-btn").addEventListener("click", currentWeather);
+document.getElementById("search-btn").addEventListener("click", currentWeather)
 
 
 //  PSEUDO CODE
