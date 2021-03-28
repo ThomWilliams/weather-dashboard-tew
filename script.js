@@ -8,17 +8,20 @@ var uvIndex = document.getElementById("uv-index")
 var date = document.getElementById("date")
 var weatherIcon = document.getElementById("weather-icon")
 var weatherDay = document.querySelectorAll("weather-day")
-var cardGroupEl = document.querySelectorAll(".card-group")
+var cardGroupEl = document.querySelector(".card-group")
 var APIKey = ("bcee456dac0d31a5715512feac159444");
+var searchButton = document.getElementById("search-btn")
 
 
 
 
 // CURRENT WEATHER WINDOW FUNCTION
-function currentWeather () { 
+function currentWeather (searchInput) { 
   // API Call from Current Weather - https://openweathermap.org/current
   var searchInput = document.getElementById("search-input").value
   var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=${APIKey}`
+  // var searchInput = document.getElementById("search-history").value
+  // var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchHistory}&appid=${APIKey}`
 
   fetch(requestUrl)
   .then(function (response) {
@@ -106,11 +109,35 @@ function display5DayData(data) {
     var itemData = data[i];
     console.log('itemData', itemData);
     var cardEl = createCard(itemData);
+    console.log(cardEl);
+    cardGroupEl.appendChild(cardEl);
 
-  cardGroupEl.appendChild(cardEl);
   }
 
 }
+
+function addCityHistory () {
+  var searchInput = document.getElementById("search-input");
+  var searchInputData = searchInput.value;
+
+  
+  // Stores previous players scores in local storage
+  var searchHistoryinput = JSON.parse(window.localStorage.getItem("search-history")) || [];
+  searchHistoryinput.push(searchInputData);
+  window.localStorage.setItem("search-history", JSON.stringify(searchHistoryinput));
+
+  for (var i = 0; i < searchHistoryinput.length; i++) {
+      var entry = document.createElement("button");
+      entry.textContent = searchHistoryinput[i];
+      entry.setAttribute("style", "list-style-type: none; margin-left: none");
+      var citiesList = document.getElementById("search-history");
+      citiesList.appendChild(entry);
+      // document.getElementById("search-history").value.addEventListener("click", currentWeather);
+      window.localStorage.clear();
+  } 
+}
+
+
 
 
 function createCard(data) {
@@ -129,9 +156,12 @@ function createCard(data) {
 // </div>
 
     var date = new Date(data.dt * 1000);
-    var cardEl = document.createElement('p');
-    cardEl.textContent = date;
-    return cardEl
+    var dateEl = document.createElement('p');
+    dateEl.textContent = date;
+    return dateEl
+
+
+
 
 
     // var dayDate = document.getElementById("day-date")
@@ -153,43 +183,9 @@ function createCard(data) {
 
 
 
-
-// LOCAL STORAGE
-
-
-  // Get previous search history
-  // var previousHistory;
-  // if (!JSON.parse(localStorage.getItem ('search-input'))) {
-  //   previousHistory = [];
-  // } else {
-  //   previousHistory = JSON.parse(localStorage.getItem('search-input'));
-  // }
-
-  // function addPreviousHistory () {
-  //   var addHistory = document.getElementById("search-history");
-
-  //   addHistory.textContent = searchHistory.value;
-
-    
-  //   };
-    
-    // Stores previous searh history in local storage
-    // var previousHistory = JSON.parse(window.localStorage.getItem("search-input")) || [];
-    // window.localStorage.setItem("search-input", JSON.stringify(previousHistory));
-
-    // for (var i = 0; i < previousHistory.length; i++) {
-    // var addHistory = document.createElement("li");
-    // addHistory.textContent = previousHistory[i].value;
-    // addHistory.setAttribute("style", "list-style-type: none; margin-left: none")
-    // var addHistoryList = document.getElementById("search-history");
-    // addHistoryList.appendChild(addHistory)
-    // } 
-
-
-  
 document.getElementById("search-btn").addEventListener("click", currentWeather)
-
-
+// document.getElementById("search-history").addEventListener("click", currentWeather)
+document.getElementById("search-btn").addEventListener("click", addCityHistory)
 
 //  PSEUDO CODE
 
