@@ -12,6 +12,12 @@
     margin: 5px;
     padding: 5px;
     background-color: cornflowerblue;
+    font-size: 12px;
 }
+
+.five-day-card {
+    background: #52ce90;
+    color: #fff;
+  }
 
 /* see cards - https://getbootstrap.com/docs/5.0/components/card/ */

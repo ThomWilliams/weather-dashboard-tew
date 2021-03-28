@@ -9,13 +9,7 @@ var date = document.getElementById("date")
 var weatherIcon = document.getElementById("weather-icon")
 var weatherDay = document.querySelectorAll("weather-day")
 var APIKey = ("bcee456dac0d31a5715512feac159444");
-
-// My API key is bcee456dac0d31a5715512feac159444
-
-// - Example of API call:
-// api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=bcee456dac0d31a5715512feac159444
-
-
+var historyItems = [];
 
 // CURRENT WEATHER WINDOW FUNCTION
 function currentWeather () { 
@@ -35,9 +29,10 @@ function currentWeather () {
     //Setting the text HTML elements from Weather Data
     cityName.textContent = data.name;
     date.textContent = new Date().toLocaleDateString();
-    temp.textContent = "Temperature: " + data.main.temp;
-    humidity.textContent = "Humidity: " + data.main.humidity;
-    windspeed.textContent = "Windspeed: " + data.wind.speed + "kmph";
+    var tempDegrees = data.main.temp - 273.15;
+    temp.textContent = "Temperature: " + Math.round(tempDegrees) + "°C";
+    humidity.textContent = "Humidity: " + data.main.humidity + "%";
+    windspeed.textContent = "Windspeed: " + data.wind.speed + "MPH";
     uvIndex.textContent = data.uvi;
     // weatherIcon = data.weather[0].icon;
     var weatherIcondata = data.weather[0].icon;
@@ -75,12 +70,7 @@ function currentWeather () {
    
 
 
-
-
-
-
-    // RUNS FIVE DAY WEATHER SIMULTAENOUSLY
-
+    // RUNS FIVE DAY WEATHER 
     var getFiveDayAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=${APIKey}`
     // https://openweathermap.org/forecast5
     fetch(getFiveDayAPI)
@@ -89,34 +79,129 @@ function currentWeather () {
     })
     .then(function (data) {
     console.log(data);
-    //  Convert data from API into curent date
-    var date = new Date(data.daily[0].dt * 1000);
-    // console.log(date.toUTCString())
-
-    // 5 DAY VARIABLES
-    var dayDate = document.getElementById("day-date")
-    var dayTemp = document.getElementById("day-temp")
-    var dayHumidity = document.getElementById("day-humidity")
-    var dayWeathericon = document.getElementById("day-weather-icon")
 
 
-    dayDate.textContent = date;
-    dayTemp.textContent = "Temp: " + data.daily[0].temp.max;
-    dayHumidity.textContent = "Humidity: " + data.daily[0].humidity;
-    var dayweatherIcondata = data.daily[0].weather[0].icon;
-    //console.log(weatherIcondata);
-    var iconURL="http://openweathermap.org/img/w/"+dayweatherIcondata+".png";
-    dayWeathericon.setAttribute("src", iconURL);
+      // FIVE DAY FORECAST
+
+    for( var i=1; i <= data.daily.length - 3; i++) {
+      var date = new Date(data.daily[i].dt * 1000);
+      var dayDate = document.getElementById("day-date")
+      var dayTemp = document.getElementById("day-temp")
+      var dayHumidity = document.getElementById("day-humidity")
+      var dayWeathericon = document.getElementById("day-weather-icon")
+
+      dayDate.textContent = date;
+      dayTemp.textContent = "Temp: " + data.daily[i].temp.max;
+      dayHumidity.textContent = "Humidity: " + data.daily[i].humidity;
+      var dayweatherIcondata = data.daily[i].weather[0].icon;
+      //console.log(weatherIcondata);
+      var iconURL="http://openweathermap.org/img/w/"+dayweatherIcondata+".png";
+      dayWeathericon.setAttribute("src", iconURL);
+  
+    }
 
 
-    // FOR LOOP TO REITERATE ACROSS 5 DAYS
-    // for (var i = 0; i < weatherDay.length; i++) {
-        // Create index for data.daily = 0; and increment by ++ for each weather day
 
-    // DAY 0 = Tomorrow // DAY 1 = 
 
-    // NEED TO CREATE THE WINDOWS IN JS + APPEND THE DATA, RATHER THAN BE IN JS
 
+
+// FIVE DAY FORECAST RENDER IN JS
+
+    // var fiveDaytitleEl = document.createElement("h3");               
+    // var fiveDaytitleEltext = document.createTextNode("Five Day Forecast: "); 
+
+
+      // create row for cards
+
+    
+    // fiveDayForecastList.appendChild(dayDateEl)
+    // fiveDayForecastEl.appendChild(fiveDayForecastList)
+    // fiveDaytitleEl.appendChild(fiveDaytitleEltext);                           
+    // fiveDayForecastEl.appendChild(fiveDaytitleEl); 
+
+
+
+  
+  
+    // var fiveDaycardgroupEL = document.createElement('div');
+    // fiveDaycardgroupEL.classList.add("card-group row row-cols-1 row-cols-md-3 g-4")
+    // fiveDayForecastRow.append(fiveDaycardgroupEL)
+
+    // for (var i = 0; i < data.daily.length; i++) {
+    //   if (data.list[i].dt_text.indexOf('15:00:00') !== -1) {
+    //     var colEL = document.createElement('div');
+    //     colEL.classList.add('col-12 col-md-4 col-xl-2');
+    //     fiveDaycardgroupEL.append(colEL);
+    //     var cardEl = document.createElement('div');
+    //     cardEl.classList.add('weather-day card h-100');
+    //     colEL.append(cardEl);
+    //     var cardtitleEL = document.createElement('h5');
+    //     cardtitleEL.classList.add('card-title');
+    //     var cardImage = document.createElement('img');
+    //     cardImage.classList.add('card-img-top')
+    //     var dayweatherIcondata = data.daily[i].weather[0].icon;
+    //     var iconURL="http://openweathermap.org/img/w/"+dayweatherIcondata+".png";
+    //     cardImage.setAttribute("src", iconURL);
+    //     var cardUl = document.createElement('ul');
+    //     cardUl.classList.add('card-body');
+    //     var dayDateEl = document.createElement('li');
+    //     dayDateEl.classList.add('card-text');
+    //     var date = new Date(data.daily[i].dt * 1000);
+    //     dayDateEl.textContent = date;
+    //     var dayTempEl = document.createElement('li');
+    //     dayTempEl.classList.add('card-text');
+    //     dayTempEl.textContent = "Temp: " + data.daily[0].temp.max;
+    //     var dayHumidityEl = document.createElement('li');
+    //     dayHumidityEl.classList.add('card-text');
+    //     dayHumidityEl.textContent = "Humidity: " + data.daily[0].humidity;
+        
+    //     cardUl.append(dayDateEl, dayTempEl, dayHumidityEl);
+
+    //     cardEL.append(cardtitleEL, cardImage, cardUl);
+
+  
+
+    //   }
+
+
+
+    // }
+
+
+
+
+
+
+// LOCAL STORAGE
+
+
+  // Get previous search history
+  // var previousHistory;
+  // if (!JSON.parse(localStorage.getItem ('search-input'))) {
+  //   previousHistory = [];
+  // } else {
+  //   previousHistory = JSON.parse(localStorage.getItem('search-input'));
+  // }
+
+  // function addPreviousHistory () {
+  //   var addHistory = document.getElementById("search-history");
+
+  //   addHistory.textContent = searchHistory.value;
+
+    
+  //   };
+    
+    // Stores previous searh history in local storage
+    // var previousHistory = JSON.parse(window.localStorage.getItem("search-input")) || [];
+    // window.localStorage.setItem("search-input", JSON.stringify(previousHistory));
+
+    // for (var i = 0; i < previousHistory.length; i++) {
+    // var addHistory = document.createElement("li");
+    // addHistory.textContent = previousHistory[i].value;
+    // addHistory.setAttribute("style", "list-style-type: none; margin-left: none")
+    // var addHistoryList = document.getElementById("search-history");
+    // addHistoryList.appendChild(addHistory)
+    // } 
 
 
   
@@ -127,34 +212,10 @@ function currentWeather () {
 }
 
 
-// FIVE DAY WEATHER FUNCTION
 
-// function fiveDayWeather (lat, lon, cityName) {
-
-
-// }
-
-
-
-
-
-
-// FROM COLUM
-
-    /* WEATHER ICONS Insert the image icons - these can be found in the object for each day under "weather.array(1).icon"
-    http://openweathermap.org/img/w/10d.png
-http://openweathermap.org/img/w/${data.daily[i].weather.icon}.png
-Var img = createElement(“img”);
-img.setAttribute(“src”, “http://openweathermap.org/img/w/${data.daily[i].weather.icon}.png”)
-
-}
-
-// https://openweathermap.org/forecast5
-
-
-*/
 
 document.getElementById("search-btn").addEventListener("click", currentWeather)
+
 
 
 //  PSEUDO CODE
@@ -179,17 +240,4 @@ document.getElementById("search-btn").addEventListener("click", currentWeather)
 
 
 
-
-// ICON STUFF FROM ALAN...
-
-// function returnIconURL (code) {
-//     return 'https://openweathermap.org/weather-conditions#How-to-get-icon-URL' + code + '.png'
-// }
-
-// var icons = {
-//     clouds: '03n',
-//     sunny: '01d',
-// }
-
-// returnIconURL (icons.clouds)
 
