@@ -10,18 +10,17 @@ var weatherIcon = document.getElementById("weather-icon")
 var weatherDay = document.querySelectorAll("weather-day")
 var cardGroupEl = document.querySelector(".card-group")
 var APIKey = ("bcee456dac0d31a5715512feac159444");
-var searchButton = document.getElementById("search-btn")
-
+var searchButton = document.getElementById("search-btn");
+var fiveDayForecastEl = document.getElementById("five-day-forecast");
+var cardUl = document.getElementById("five-day-card");
 
 
 
 // CURRENT WEATHER WINDOW FUNCTION
-function currentWeather (searchInput) { 
+function currentWeather () { 
   // API Call from Current Weather - https://openweathermap.org/current
   var searchInput = document.getElementById("search-input").value
   var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=${APIKey}`
-  // var searchInput = document.getElementById("search-history").value
-  // var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchHistory}&appid=${APIKey}`
 
   fetch(requestUrl)
   .then(function (response) {
@@ -108,20 +107,19 @@ function display5DayData(data) {
   for( var i=1; i <= data.length - 3; i++) {
     var itemData = data[i];
     console.log('itemData', itemData);
-    var cardEl = createCard(itemData);
-    console.log(cardEl);
-    cardGroupEl.appendChild(cardEl);
+    var cardDataEl = createCard(itemData);
+    console.log(cardDataEl);
+    cardGroupEl.appendChild(cardDataEl);
 
   }
 
 }
 
+// STORES SEARCH IN LOCAL STORAGE
 function addCityHistory () {
   var searchInput = document.getElementById("search-input");
   var searchInputData = searchInput.value;
 
-  
-  // Stores previous players scores in local storage
   var searchHistoryinput = JSON.parse(window.localStorage.getItem("search-history")) || [];
   searchHistoryinput.push(searchInputData);
   window.localStorage.setItem("search-history", JSON.stringify(searchHistoryinput));
@@ -132,8 +130,8 @@ function addCityHistory () {
       entry.setAttribute("style", "list-style-type: none; margin-left: none");
       var citiesList = document.getElementById("search-history");
       citiesList.appendChild(entry);
-      // document.getElementById("search-history").value.addEventListener("click", currentWeather);
       window.localStorage.clear();
+      
   } 
 }
 
@@ -158,25 +156,28 @@ function createCard(data) {
     var date = new Date(data.dt * 1000);
     var dateEl = document.createElement('p');
     dateEl.textContent = date;
-    return dateEl
 
 
+    var temp = data.temp.max - 273.15;
+    var tempEl = document.createElement('p');
+    tempEl.textContent = "Temperature: " + Math.round(temp) + "°C";
 
+    var humidity = data.humidity;
+    humidityEl = document.createElement('p');
+    humidityEl.textContent = humidity + "%";
 
+    var weatherIcon = data.weather[0].icon;
+    weatherIconEl = document.createElement('img');
+    var iconURL="http://openweathermap.org/img/w/"+weatherIcon+".png";
+    weatherIconEl.setAttribute("src", iconURL);
 
-    // var dayDate = document.getElementById("day-date")
-    // var dayTemp = document.getElementById("day-temp")
-    // var dayHumidity = document.getElementById("day-humidity")
-    // var dayWeathericon = document.getElementById("day-weather-icon")
+   
+    cardDataEl = document.createElement('div');
+    cardDataEl.append(weatherIconEl, humidityEl, tempEl, dateEl)
+  
 
-    // dayDate.textContent = date;
-    // dayTemp.textContent = "Temp: " + data.daily[i].temp.max;
-    // dayHumidity.textContent = "Humidity: " + data.daily[i].humidity;
-    // var dayweatherIcondata = data.daily[i].weather[0].icon;
-    // //console.log(weatherIcondata);
-    // var iconURL="http://openweathermap.org/img/w/"+dayweatherIcondata+".png";
-    // dayWeathericon.setAttribute("src", iconURL);
-
+    return cardDataEl;
+ 
 
 }
 
@@ -184,7 +185,6 @@ function createCard(data) {
 
 
 document.getElementById("search-btn").addEventListener("click", currentWeather)
-// document.getElementById("search-history").addEventListener("click", currentWeather)
 document.getElementById("search-btn").addEventListener("click", addCityHistory)
 
 //  PSEUDO CODE
