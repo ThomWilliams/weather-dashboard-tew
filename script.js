@@ -153,7 +153,8 @@ function createCard(data) {
 //     </div>
 // </div>
 
-    var date = new Date(data.dt * 1000);
+    var date = new Date(data.dt * 1000).toLocaleDateString();
+  
     var dateEl = document.createElement('p');
     dateEl.textContent = date;
 
@@ -180,8 +181,6 @@ function createCard(data) {
  
 
 }
-
-
 
 
 document.getElementById("search-btn").addEventListener("click", currentWeather)
