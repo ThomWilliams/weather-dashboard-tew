@@ -107,9 +107,9 @@ function display5DayData(data) {
   for( var i=1; i <= data.length - 3; i++) {
     var itemData = data[i];
     console.log('itemData', itemData);
-    var cardDataEl = createCard(itemData);
-    console.log(cardDataEl);
-    cardGroupEl.appendChild(cardDataEl);
+    var fiveDayCards = createCard(itemData);
+    console.log(fiveDayCards);
+    cardGroupEl.appendChild(fiveDayCards);
 
   }
 
@@ -154,30 +154,39 @@ function createCard(data) {
 // </div>
 
     var date = new Date(data.dt * 1000).toLocaleDateString();
-  
     var dateEl = document.createElement('p');
+    dateEl.classList.add("card-text");
     dateEl.textContent = date;
 
 
     var temp = data.temp.max - 273.15;
     var tempEl = document.createElement('p');
-    tempEl.textContent = "Temperature: " + Math.round(temp) + "°C";
+    tempEl.classList.add("card-text");
+    tempEl.textContent = "Temp: " + Math.round(temp) + "°C";
 
     var humidity = data.humidity;
     humidityEl = document.createElement('p');
-    humidityEl.textContent = humidity + "%";
+    humidityEl.classList.add("card-text");
+    humidityEl.textContent = "Humid:" + humidity + "%";
 
     var weatherIcon = data.weather[0].icon;
     weatherIconEl = document.createElement('img');
+    weatherIconEl.classList.add("card-img-top");
     var iconURL="http://openweathermap.org/img/w/"+weatherIcon+".png";
     weatherIconEl.setAttribute("src", iconURL);
 
    
     cardDataEl = document.createElement('div');
-    cardDataEl.append(weatherIconEl, humidityEl, tempEl, dateEl)
-  
+    cardDataEl.classList.add("card-body");
+    cardDataEl.append(weatherIconEl, dateEl, humidityEl, tempEl)
+    cardContainerEl = document.createElement('div');
+    cardContainerEl.classList.add('card');
+    cardContainerEl.append(cardDataEl);
+    fiveDayCards = document.createElement('div');
+    fiveDayCards.classList.add('col-12col-md-4col-xl-2');
+    fiveDayCards.appendChild(cardContainerEl);
 
-    return cardDataEl;
+    return fiveDayCards;
  
 
 }
