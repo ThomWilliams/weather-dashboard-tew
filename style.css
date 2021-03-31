@@ -1,3 +1,9 @@
+.bg-image {
+        background: url("https://image.freepik.com/free-photo/white-clound-bluesky_39086-45.jpg");
+        background-size: cover; 
+}
+
+
 .card-text {
     list-style: none;
 }
@@ -15,9 +21,6 @@
     font-size: 12px;
 }
 
-.five-day-card {
-    background: #52ce90;
-    color: #fff;
-  }
+
 
 /* see cards - https://getbootstrap.com/docs/5.0/components/card/ */

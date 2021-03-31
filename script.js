@@ -15,7 +15,6 @@ var fiveDayForecastEl = document.getElementById("five-day-forecast");
 var cardUl = document.getElementById("five-day-card");
 
 
-
 // CURRENT WEATHER WINDOW FUNCTION
 function currentWeather () { 
   // API Call from Current Weather - https://openweathermap.org/current
@@ -127,11 +126,12 @@ function addCityHistory () {
   for (var i = 0; i < searchHistoryinput.length; i++) {
       var entry = document.createElement("button");
       entry.textContent = searchHistoryinput[i];
-      entry.setAttribute("style", "list-style-type: none; margin-left: none");
+      entry.setAttribute("id", "search-item");
       var citiesList = document.getElementById("search-history");
       citiesList.appendChild(entry);
       window.localStorage.clear();
-      
+    
+      entry.onclick = currentWeather;
   } 
 }
 
@@ -139,19 +139,6 @@ function addCityHistory () {
 
 
 function createCard(data) {
-
-     // RENDER INTO JS CARDS - CREATE A CARD FROM THE DATA
-//     <div class="col-12 col-md-4 col-xl-2">
-//     <div class="weather-day card h-100">
-//         <h5 class="card-title" id="day-1">Day 1</h5>
-//         <img src="" class="card-img-top" id="day-weather-icon" alt="...">
-//         <ul class="card-body">
-//             <li class="card-text" id="day-date">date</li>
-//             <li class="card-text" id="day-temp">temp</li>
-//             <li class="card-text" id="day-humidity">humidity</li>
-//         </ul>
-//     </div>
-// </div>
 
     var date = new Date(data.dt * 1000).toLocaleDateString();
     var dateEl = document.createElement('p');
@@ -167,7 +154,7 @@ function createCard(data) {
     var humidity = data.humidity;
     humidityEl = document.createElement('p');
     humidityEl.classList.add("card-text");
-    humidityEl.textContent = "Humid:" + humidity + "%";
+    humidityEl.textContent = "Humid: " + humidity + "%";
 
     var weatherIcon = data.weather[0].icon;
     weatherIconEl = document.createElement('img');
@@ -175,25 +162,29 @@ function createCard(data) {
     var iconURL="http://openweathermap.org/img/w/"+weatherIcon+".png";
     weatherIconEl.setAttribute("src", iconURL);
 
-   
+  
     cardDataEl = document.createElement('div');
     cardDataEl.classList.add("card-body");
-    cardDataEl.append(weatherIconEl, dateEl, humidityEl, tempEl)
+    cardDataEl.append(weatherIconEl, dateEl, humidityEl, tempEl);
+
     cardContainerEl = document.createElement('div');
     cardContainerEl.classList.add('card');
     cardContainerEl.append(cardDataEl);
+
     fiveDayCards = document.createElement('div');
     fiveDayCards.classList.add('col-12col-md-4col-xl-2');
     fiveDayCards.appendChild(cardContainerEl);
 
     return fiveDayCards;
  
-
 }
 
 
 document.getElementById("search-btn").addEventListener("click", currentWeather)
-document.getElementById("search-btn").addEventListener("click", addCityHistory)
+document.getElementById("search-btn").addEventListener("click", addCityHistory) 
+
+
+
 
 //  PSEUDO CODE
 
