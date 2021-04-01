@@ -1,7 +1,7 @@
 
 var searchHistory = document.getElementById("search-history")
 var cityName = document.getElementById("city")
-var temp = document.getElementById("temp")
+var tempDegrees = document.getElementById("temp")
 var humidity = document.getElementById("humidity")
 var windspeed = document.getElementById("windspeed")
 var uvIndex = document.getElementById("uv-index")
@@ -13,6 +13,7 @@ var APIKey = ("bcee456dac0d31a5715512feac159444");
 var searchButton = document.getElementById("search-btn");
 var fiveDayForecastEl = document.getElementById("five-day-forecast");
 var cardUl = document.getElementById("five-day-card");
+var currentWeatherEl = document.getElementById("current-weather");
 
 
 // CURRENT WEATHER WINDOW FUNCTION
@@ -27,7 +28,7 @@ function currentWeather () {
   })
   .then(function (data) {
   console.log('currentWeather', data);
-  displayCurrentWeather(data);
+  displayCurrentWeatherData(data);
   var latData = data.coord.lat;
   var lonData = data.coord.lon;
 
@@ -50,37 +51,106 @@ function getUVdata (lat, lon) {
   console.log('UVdata', data);
 
   // UV Index - color coded: red = severe, moderate = yellow, favorable = green
-  uvIndexdata = data.value; 
+  var uvIndexdata = data.value; 
   if (uvIndexdata > 8) {
-      uvIndex.style.backgroundColor = "red";
+      uvIndexdata.style.backgroundColor("red");
   } if (uvIndexdata < 3) {
-      uvIndex.style.backgroundColor = "green";
+      uvIndexdata.style.backgroundColor("green");
   } if ((uvIndexdata >= 3) && (uvIndexdata < 7)) {
-      uvIndex.style.backgroundColor = "yellow";}
-  uvIndex.textContent = "UV Index: " + uvIndexdata;
-
+      uvIndexdata.style.backgroundColor("yellow")}
 })
 }
 
 
+function displayCurrentWeatherData(data) {
+
+  var itemData = data;
+  console.log('currentweatheritemData', itemData);
+  var currentWeatherCard = createCard(itemData);
+  console.log(currentWeatherCard);
+  currentWeatherCard.appendChild(currentWeatherEl)
+
+}
 
 
-function displayCurrentWeather (data) {
+
+function createCurrentWeatherCard(data) {
+
+//   <div class="row">
+//   <div class="card mb-3">
+//       <figure id="icon">
+//            <image src="" id="weather-icon" alt="...">
+//       </figure>
+//       <ul class="card-body">
+//           <h5 class="card-title" id="city">City Name</h5>
+//           <h5 class="card-title" id="date">Today's Date</h5>
+//           <li class="card-text" id="temp">temp</li>
+//           <li class="card-text" id="humidity">humidity</li>
+//           <li class="card-text" id="windspeed">windspeed</li>
+//           <li class="card-text" id="uv-index">uv-index</li>
+//       </ul>
+//   </div>
+// </div>
 
   //Setting the text HTML elements from Weather Data
-  cityName.textContent = data.name;
-  date.textContent = new Date().toLocaleDateString();
-  var tempDegrees = data.main.temp - 273.15;
-  temp.textContent = "Temperature: " + Math.round(tempDegrees) + "°C";
-  humidity.textContent = "Humidity: " + data.main.humidity + "%";
-  windspeed.textContent = "Windspeed: " + data.wind.speed + "MPH";
-  uvIndex.textContent = data.uvi;
-  // weatherIcon = data.weather[0].icon;
+  
+  currentWeatherEl = document.createElement('div');
+  currentWeatherEl.classList.add("row");
+  currentWeatherEl.append(mainrowEl);
+
+  var mainrowEl = document.createElement('div');
+  mainrowEl.classList.add("row");
+  mainrowEl.append(mainCardEl);
+
+  var mainCardEl = document.createElement('div');
+  mainCardEl.classList.add("cardmb-3");
+  mainCardEl.append(mainCardBody);
+
+  var mainCardBody = document.createElement('ul');
+  mainCardBody.classList.add("card-body");
+  mainCardBody.appendChild(weatherIconFig, cityNameEl, dateEl, tempEl, humidityEl, windspeedEl, uvIndexEl)
+
+  // weatherIcon 
   var weatherIcondata = data.weather[0].icon;
-  //console.log(weatherIcondata);
+  var weatherIconFig = document.createElement('figure');
+  var weatherIconImg = document.createElement('img');
   var iconURL="http://openweathermap.org/img/w/"+weatherIcondata+".png";
-  weatherIcon.setAttribute("src", iconURL)
-  // iconEl.setAttribute("src", iconURL);
+  weatherIconImg.setAttribute("src", iconURL, "id", "weather-icon")
+  weatherIconFig.append(weatherIconImg);
+
+  cityName = data.name;
+  var cityNameEl = document.createElement('h5');
+  cityNameEl.classList.add("card-title");
+  cityNameEl.textContent = cityName;
+
+  date = new Date().toLocaleDateString();
+  var dateEl = document.createElement('h5');
+  dateEl.classList.add("card-title");
+  dateEl.textContent = date;
+
+  tempDegrees = data.main.temp - 273.15;
+  var tempEl = document.createElement('li');
+  tempEl.classList.add("card-title");
+  tempEl.textContent = "Temperature: " + Math.round(tempDegrees) + "°C";
+
+  humidity = data.main.humidity;
+  var humidityEl = document.createElement('li');
+  humidityEl.classList.add("card-title");
+  humidityEl.textContent = "Humidity: " + humidity + "%";
+
+  windspeed = data.wind.speed;
+  var windspeedEl = document.createElement('li');
+  windspeedEl.classList.add("card-title");
+  windspeedEl.textContent = "Windspeed: " + windspeed + " MPH";
+
+  uvIndex = data.uvi;
+  var uvIndexEl = document.createElement('li');
+  uvIndexEl.classList.add("card-title");
+  uvIndexEl.textContent = "UV Index: " + uvIndex;
+
+  
+  return currentWeatherEl
+
 
 }
 
@@ -124,9 +194,10 @@ function addCityHistory () {
   window.localStorage.setItem("search-history", JSON.stringify(searchHistoryinput));
 
   for (var i = 0; i < searchHistoryinput.length; i++) {
-      var entry = document.createElement("button");
+      var entry = document.createElement("div");
       entry.textContent = searchHistoryinput[i];
       entry.setAttribute("id", "search-item");
+      entry.classList.add("btn","btn-outline-primary")
       var citiesList = document.getElementById("search-history");
       citiesList.appendChild(entry);
       window.localStorage.clear();
@@ -145,8 +216,7 @@ function createCard(data) {
     dateEl.classList.add("card-text");
     dateEl.textContent = date;
 
-
-    var temp = data.temp.max - 273.15;
+    var temp = data.temp - 273.15;
     var tempEl = document.createElement('p');
     tempEl.classList.add("card-text");
     tempEl.textContent = "Temp: " + Math.round(temp) + "°C";
