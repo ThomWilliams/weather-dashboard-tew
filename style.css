@@ -3,15 +3,20 @@
         background-size: cover; 
 }
 
+header {
+    /* background-color: orange; */
+    color: white;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
+}
 
 .card-text {
     list-style: none;
 }
 
 .card-group {
-    background-color: rgb(230, 230, 236);
     margin: auto;
     padding: 10px;
+    font-size: 12px;
 }
 
 .weather-day {
@@ -21,7 +26,10 @@
     font-size: 12px;
 }
 
-
+h4 {
+    color: white;
+    font-family: sans-serif;
+}
 
 
 /* see cards - https://getbootstrap.com/docs/5.0/components/card/ */
