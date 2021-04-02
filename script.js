@@ -28,7 +28,7 @@ function currentWeather () {
   })
   .then(function (data) {
   console.log('currentWeather', data);
-  displayCurrentWeatherData(data);
+  createCurrentWeatherCard(data);
   var latData = data.coord.lat;
   var lonData = data.coord.lon;
 
@@ -52,25 +52,20 @@ function getUVdata (lat, lon) {
 
   // UV Index - color coded: red = severe, moderate = yellow, favorable = green
   var uvIndexdata = data.value; 
+var uvHtml = document.getElementById("uv-index");
+uvHtml.textContent = uvIndexdata;
   if (uvIndexdata > 8) {
-      uvIndexdata.style.backgroundColor("red");
-  } if (uvIndexdata < 3) {
-      uvIndexdata.style.backgroundColor("green");
-  } if ((uvIndexdata >= 3) && (uvIndexdata < 7)) {
-      uvIndexdata.style.backgroundColor("yellow")}
+      uvHtml.setAttribute("class","red");
+      console.log("r")
+  } else if (uvIndexdata < 3) {
+      uvHtml.setAttribute("class", "green");
+      console.log("g")
+  } else {
+      uvHtml.setAttribute("class", "yellow")}
+      console.log("y")
 })
 }
 
-
-function displayCurrentWeatherData(data) {
-
-  var itemData = data;
-  console.log('currentweatheritemData', itemData);
-  var currentWeatherCard = createCard(itemData);
-  console.log(currentWeatherCard);
-  currentWeatherCard.appendChild(currentWeatherEl)
-
-}
 
 // CURRENT WEATHER WINDOW
 
@@ -93,23 +88,31 @@ function createCurrentWeatherCard(data) {
 // </div>
 
   //Setting the text HTML elements from Weather Data
-  
-  currentWeatherEl = document.createElement('div');
-  currentWeatherEl.classList.add("row");
-  currentWeatherEl.append(mainrowEl);
+//   var name = data.name;
+//   document.getElementById("city").textContent = name; 
+//   var date = new Date()
+
+// document.getElementById("date").textContent = date;
+  // currentWeatherEl = document.createElement('div');
+  // currentWeatherEl.classList.add("row");
+  // currentWeatherEl.append(mainrowEl);
 
   var mainrowEl = document.createElement('div');
   mainrowEl.classList.add("row");
-  mainrowEl.append(mainCardEl);
-
-  var mainCardEl = document.createElement('div');
-  mainCardEl.classList.add("cardmb-3");
-  mainCardEl.append(mainCardBody);
-
-  var mainCardBody = document.createElement('ul');
+  
+  // var mainCardEl = document.createElement('div');
+  // mainCardEl.classList.add("cardmb-3");
+  // // mainCardEl.append(mainCardBody);
+  // mainrowEl.append(mainCardEl);
+  
+  var mainCardBody = document.createElement('div');
   mainCardBody.classList.add("card-body");
-  mainCardBody.appendChild(weatherIconFig, cityNameEl, dateEl, tempEl, humidityEl, windspeedEl, uvIndexEl)
-
+  
+  cityName = data.name;
+  var cityNameEl = document.createElement('h5');
+  cityNameEl.classList.add("card-title");
+  cityNameEl.textContent = cityName;
+  mainCardBody.appendChild(cityNameEl)
   // weatherIcon 
   var weatherIcondata = data.weather[0].icon;
   var weatherIconFig = document.createElement('figure');
@@ -117,39 +120,42 @@ function createCurrentWeatherCard(data) {
   var iconURL="http://openweathermap.org/img/w/"+weatherIcondata+".png";
   weatherIconImg.setAttribute("src", iconURL, "id", "weather-icon")
   weatherIconFig.append(weatherIconImg);
+  mainCardBody.appendChild(weatherIconFig)
+  
 
-  cityName = data.name;
-  var cityNameEl = document.createElement('h5');
-  cityNameEl.classList.add("card-title");
-  cityNameEl.textContent = cityName;
 
   date = new Date().toLocaleDateString();
   var dateEl = document.createElement('h5');
   dateEl.classList.add("card-title");
   dateEl.textContent = date;
-
+  mainCardBody.appendChild(dateEl)
+  
   tempDegrees = data.main.temp - 273.15;
-  var tempEl = document.createElement('li');
+  var tempEl = document.createElement('p');
   tempEl.classList.add("card-title");
   tempEl.textContent = "Temperature: " + Math.round(tempDegrees) + "°C";
-
+  mainCardBody.appendChild(tempEl)
   humidity = data.main.humidity;
-  var humidityEl = document.createElement('li');
+  var humidityEl = document.createElement('p');
   humidityEl.classList.add("card-title");
   humidityEl.textContent = "Humidity: " + humidity + "%";
-
+  mainCardBody.appendChild(humidityEl)
   windspeed = data.wind.speed;
-  var windspeedEl = document.createElement('li');
+  var windspeedEl = document.createElement('p');
   windspeedEl.classList.add("card-title");
   windspeedEl.textContent = "Windspeed: " + windspeed + " MPH";
-
+  mainCardBody.appendChild(windspeedEl)
   uvIndex = data.uvi;
-  var uvIndexEl = document.createElement('li');
-  uvIndexEl.classList.add("card-title");
-  uvIndexEl.textContent = "UV Index: " + uvIndex;
 
+
+  var uvIndexEl = document.createElement('p');
+  uvIndexEl.setAttribute("id", "uv-index")
+  uvIndexEl.classList.add("card-title");
+  // uvIndexEl.textContent = "UV Index: " + uvIndex;
+  mainCardBody.appendChild(uvIndexEl)
+  currentWeatherEl.appendChild(mainCardBody)
   
-  return currentWeatherEl
+  // return currentWeatherEl
 
 
 }
