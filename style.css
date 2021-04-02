@@ -31,5 +31,16 @@ h4 {
     font-family: sans-serif;
 }
 
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+.yellow {
+    background-color: yellow;
+}
 
 /* see cards - https://getbootstrap.com/docs/5.0/components/card/ */

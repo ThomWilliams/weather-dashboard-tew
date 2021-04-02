@@ -71,27 +71,6 @@ uvHtml.textContent = uvIndexdata;
 
 function createCurrentWeatherCard(data) {
 
-//   <div class="row">
-//   <div class="card mb-3">
-//       <figure id="icon">
-//            <image src="" id="weather-icon" alt="...">
-//       </figure>
-//       <ul class="card-body">
-//           <h5 class="card-title" id="city">City Name</h5>
-//           <h5 class="card-title" id="date">Today's Date</h5>
-//           <li class="card-text" id="temp">temp</li>
-//           <li class="card-text" id="humidity">humidity</li>
-//           <li class="card-text" id="windspeed">windspeed</li>
-//           <li class="card-text" id="uv-index">uv-index</li>
-//       </ul>
-//   </div>
-// </div>
-
-  //Setting the text HTML elements from Weather Data
-//   var name = data.name;
-//   document.getElementById("city").textContent = name; 
-//   var date = new Date()
-
 // document.getElementById("date").textContent = date;
   // currentWeatherEl = document.createElement('div');
   // currentWeatherEl.classList.add("row");
@@ -102,7 +81,7 @@ function createCurrentWeatherCard(data) {
   
   // var mainCardEl = document.createElement('div');
   // mainCardEl.classList.add("cardmb-3");
-  // // mainCardEl.append(mainCardBody);
+  // mainCardEl.append(mainCardBody);
   // mainrowEl.append(mainCardEl);
   
   var mainCardBody = document.createElement('div');
@@ -151,12 +130,8 @@ function createCurrentWeatherCard(data) {
   var uvIndexEl = document.createElement('p');
   uvIndexEl.setAttribute("id", "uv-index")
   uvIndexEl.classList.add("card-title");
-  // uvIndexEl.textContent = "UV Index: " + uvIndex;
   mainCardBody.appendChild(uvIndexEl)
   currentWeatherEl.appendChild(mainCardBody)
-  
-  // return currentWeatherEl
-
 
 }
 
@@ -222,7 +197,7 @@ function createCard(data) {
   dateEl.classList.add("card-text");
   dateEl.textContent = date;
 
-  var temp = data.temp - 273.15;
+  var temp = data.temp.max - 273.15;
   var tempEl = document.createElement('p');
   tempEl.classList.add("card-text");
   tempEl.textContent = "Temp: " + Math.round(temp) + "°C";
