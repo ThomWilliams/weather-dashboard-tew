@@ -72,7 +72,7 @@ function displayCurrentWeatherData(data) {
 
 }
 
-
+// CURRENT WEATHER WINDOW
 
 function createCurrentWeatherCard(data) {
 
@@ -211,41 +211,41 @@ function addCityHistory () {
 
 function createCard(data) {
 
-    var date = new Date(data.dt * 1000).toLocaleDateString();
-    var dateEl = document.createElement('p');
-    dateEl.classList.add("card-text");
-    dateEl.textContent = date;
+  var date = new Date(data.dt * 1000).toLocaleDateString();
+  var dateEl = document.createElement('p');
+  dateEl.classList.add("card-text");
+  dateEl.textContent = date;
 
-    var temp = data.temp - 273.15;
-    var tempEl = document.createElement('p');
-    tempEl.classList.add("card-text");
-    tempEl.textContent = "Temp: " + Math.round(temp) + "°C";
+  var temp = data.temp - 273.15;
+  var tempEl = document.createElement('p');
+  tempEl.classList.add("card-text");
+  tempEl.textContent = "Temp: " + Math.round(temp) + "°C";
 
-    var humidity = data.humidity;
-    humidityEl = document.createElement('p');
-    humidityEl.classList.add("card-text");
-    humidityEl.textContent = "Humid: " + humidity + "%";
+  var humidity = data.humidity;
+  humidityEl = document.createElement('p');
+  humidityEl.classList.add("card-text");
+  humidityEl.textContent = "Humid: " + humidity + "%";
 
-    var weatherIcon = data.weather[0].icon;
-    weatherIconEl = document.createElement('img');
-    weatherIconEl.classList.add("card-img-top");
-    var iconURL="http://openweathermap.org/img/w/"+weatherIcon+".png";
-    weatherIconEl.setAttribute("src", iconURL);
+  var weatherIcon = data.weather[0].icon;
+  weatherIconEl = document.createElement('img');
+  weatherIconEl.classList.add("card-img-top");
+  var iconURL="http://openweathermap.org/img/w/"+weatherIcon+".png";
+  weatherIconEl.setAttribute("src", iconURL);
 
-  
-    cardDataEl = document.createElement('div');
-    cardDataEl.classList.add("card-body");
-    cardDataEl.append(weatherIconEl, dateEl, humidityEl, tempEl);
 
-    cardContainerEl = document.createElement('div');
-    cardContainerEl.classList.add('card');
-    cardContainerEl.append(cardDataEl);
+  cardDataEl = document.createElement('div');
+  cardDataEl.classList.add("card-body");
+  cardDataEl.append(weatherIconEl, dateEl, humidityEl, tempEl);
 
-    fiveDayCards = document.createElement('div');
-    fiveDayCards.classList.add('col-12col-md-4col-xl-2');
-    fiveDayCards.appendChild(cardContainerEl);
+  cardContainerEl = document.createElement('div');
+  cardContainerEl.classList.add('card');
+  cardContainerEl.append(cardDataEl);
 
-    return fiveDayCards;
+  fiveDayCards = document.createElement('div');
+  fiveDayCards.classList.add('col-12col-md-4col-xl-2');
+  fiveDayCards.appendChild(cardContainerEl);
+
+  return fiveDayCards;
  
 }
 
