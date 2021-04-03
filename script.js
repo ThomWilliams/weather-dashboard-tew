@@ -71,22 +71,14 @@ uvHtml.textContent = uvIndexdata;
 
 function createCurrentWeatherCard(data) {
 
-// document.getElementById("date").textContent = date;
-  // currentWeatherEl = document.createElement('div');
-  // currentWeatherEl.classList.add("row");
-  // currentWeatherEl.append(mainrowEl);
-
   var mainrowEl = document.createElement('div');
   mainrowEl.classList.add("row");
-  
-  // var mainCardEl = document.createElement('div');
-  // mainCardEl.classList.add("cardmb-3");
-  // mainCardEl.append(mainCardBody);
-  // mainrowEl.append(mainCardEl);
   
   var mainCardBody = document.createElement('div');
   mainCardBody.classList.add("card-body");
   
+  var mainheader = document.createElement("h3");
+  mainheader.textContent = "Weather / City";
   cityName = data.name;
   var cityNameEl = document.createElement('h5');
   cityNameEl.classList.add("card-title");
@@ -131,7 +123,9 @@ function createCurrentWeatherCard(data) {
   uvIndexEl.setAttribute("id", "uv-index")
   uvIndexEl.classList.add("card-title");
   mainCardBody.appendChild(uvIndexEl)
+  currentWeatherEl.append(mainheader)
   currentWeatherEl.appendChild(mainCardBody)
+
 
 }
 

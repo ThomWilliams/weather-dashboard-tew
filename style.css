@@ -1,6 +1,7 @@
 .bg-image {
         background: url("https://image.freepik.com/free-photo/white-clound-bluesky_39086-45.jpg");
         background-size: cover; 
+       
 }
 
 header {
@@ -41,6 +42,11 @@ h4 {
 
 .yellow {
     background-color: yellow;
+}
+
+h3 {
+    line-height: 1.5;
+    margin-top: 5px;
 }
 
 /* see cards - https://getbootstrap.com/docs/5.0/components/card/ */
