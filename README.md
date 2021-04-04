@@ -45,7 +45,7 @@ Once opened in any browser such as Chrome, the styled html page for the Weather 
 
 All developments by Thom Williams to the main branch. Deployed on Git Hub pages to the following address: 
 
-[Github Pages](https://github.com/ThomWilliams/weather-dashboard-tew)
+[Github Pages](https://thomwilliams.github.io/weather-dashboard-tew/)
 
 
 ## Features
