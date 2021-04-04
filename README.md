@@ -85,7 +85,7 @@ A Wave accessibility checker confirms the following features meet accessibility 
 
 Screenshots of the desktop and mobile versions is provided in the assets Folder: 
 
-Desktop version: ![Desktop Screenshot 1]()
+Desktop version: ![Desktop Screenshot 1](Assets/weather-dashboard.png)
 
 
 
@@ -93,7 +93,7 @@ Desktop version: ![Desktop Screenshot 1]()
 
 A gif visual demonstration is also provided as a guide:
 
-GIF GUIDE: ![gif demo]()
+GIF GUIDE: ![gif demo](Assets/weather-dashboard-gif.gif)
 
 
 ======
